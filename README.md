@@ -7,3 +7,23 @@
 ```bash
 docker build . -t redroid-with-libndk:11.0.0-amd64
 ```
+
+# ubuntu 24.04 
+```
+## install required kernel modules
+sudo apt install linux-modules-extra-`uname -r`
+modprobe binder_linux devices="binder,hwbinder,vndbinder"
+### optional module (removed since 5.18)
+modprobe ashmem_linux
+```
+## `modprobe: FATAL`
+```
+modprobe: FATAL: Module ashmem_linux not found in directory /lib/modules/6.8.0-51-generic
+```
+忽略即可，后续你需要操作的是：
+```
+sudo apt install linux-modules-extra-`uname -r`
+modprobe binder_linux devices="binder,hwbinder,vndbinder"
+
+docker restart <your-redroid-container>
+```
